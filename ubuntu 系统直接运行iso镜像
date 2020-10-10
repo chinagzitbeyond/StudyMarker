@@ -1,0 +1,54 @@
+1：下载镜像后，检查它的完整性
+指令：md5sum xxxxxxxx.iso
+将这个序列号与下载页提供的md5校验码进行比较，两者应该完全相同
+2：配置grub
+iso镜像文件包含了整个系统，要告诉grub在哪里可以找到kernel和initramdisk或initram文件系统
+这里我下载的是ubuntu19
+我将下载的iso文件放在/dev/sda1的/home/tempISO/上
+3：为了让grub能正确找到它，编辑/etc/grub.d40-custom文件
+添加以下内容到文件中
+menuentry "Ubuntu19.10" {
+set isopath="/home/tempISO/ubuntu-19.10-desktop-amd64.iso"
+echo "Booting ${isopath}......"
+loopback loop (hd0,1)$isopath
+#hd0,1是第一硬盘，第一分区/dev/sda1 
+#载入内核镜像，在新的ubuntu live cd中，内核被存放在/casper目录，并且被命名为vmlinuz
+linux (loop)/casper/vmlinuz boot=casper iso-scan/filename=${isopath}
+quite splash
+#载入initrd，负责载入ramdisk到内存用于启动
+initrd (loop)/casper/initrd
+完成上面步骤后，需要更新grub
+sudo update-grub
+重启系统会出现一个新的grub条目
+解决启动过程中无法显示grub菜单
+指令：sudo vi /etc/default/grub
+找到GRUB_HIDDEN_TIMEOUT=0
+GRUB_HIDDEN_TIMEOUT_QUIET=true
+把它改成
+GRUB_HIDDEN_TIMEOUT=10
+GRUB_HIDDEN_TIMEOUT_QUIET=false
+保存更新
+sudo update-grbu
+重新启动系统
+ubuntu下如何运行iso文件
+sudo mkdir /media/isoImage #创建挂载点
+#切换到iso文件所在目录下已虚拟光驱形式成功将iso文件读出
+mount -o loop xxxxx.iso
+#卸载iso文件
+umount /xxx/xxxx/xxxx.iso
+#退出su
+exit
+
+
+
+
+
+
+
+
+
+
+
+
+
+
