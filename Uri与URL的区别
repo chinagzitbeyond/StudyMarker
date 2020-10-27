@@ -1,0 +1,28 @@
+URI URL URN的原有英文与解释:
+
+URI (uniform resource identifier)统一资源标志符；
+URL(uniform resource location )统一资源定位符（或统一资源定位器）；
+
+URN(uniform resource name )统一资源命名。
+
+什么是URL:
+URL是internet上用来描述信息资源文件的字符串，用在客户程序和服务器上，定位客户端连接服务器所需要的信息，它不仅定位了这个信息资源，而且定义了如何找到这个资源。
+
+什么是URI:
+URI是一个相对来说更广泛的概念，URL是URI的一种，是URI命名机制的一个子集，可以说URI是抽象的，而具体要使用URL来定位资源。web上的每一种资源如：图片、文档、视频等，都是由URI定位的，这里所谓的定位指的是web上的资源相对于主机服务器来说，存放在服务器上的具体路径。
+URI一般由三部分组成：
+访问资源的命名机制。
+
+存放资源的主机名。
+
+资源自身的名称。如下图所示：
+
+Android ContentResolver使用说明（1）_27881
+将其分为A，B，C，D 4个部分：
+A：标准前缀，用来说明一个Content Provider控制这些数据，无法改变的；
+B：URI的标识，它定义了是哪个Content Provider提供这些数据。对于第三方应用程序，为了保证URI标识的唯一性，它必须是一个完整的、小写的  类名。这个标识在<provider> 元素的 authorities属性中说明：
+<provider name=”.TransportationProvider”  authorities=”com.example.transportationprovider”  . . .  >
+C：路径，Content Provider使用这些路径来确定当前需要生什么类型的数据，URI中可能不包括路径，也可能包括多个；
+D：如果URI中包含，表示需要获取的记录的ID；如果没有ID，就表示返回全部；
+由于URI通常比较长，而且有时候容易出错，切难以理解。所以，在Android当中定义了一些辅助类，并且定义了一些常量来代替这些长字符串，例如：People.CONTENT_URI。
+同时Android系统还提供了两个用于操作Uri的工具类，分别为UriMatcher 和ContentUris。UriMatcher主要用于匹配URI，ContentUris主要用于获取Uri路径后面的ID部分。
