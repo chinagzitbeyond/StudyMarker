@@ -1,0 +1,13 @@
+1.加入水平线
+
+<View 
+android:layout_height="0.5dip"
+android:background="#686868"
+android:layout_width="match_parent"/>
+
+2.加入垂直线
+
+<View 
+android:layout_height="match_parent"
+android:background="#686868"
+android:layout_width="0.5dip"/>
